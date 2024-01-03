@@ -1,6 +1,6 @@
 <nav class="nav">
   <a class="nav-link active" aria-current="page" href= {{ path('app_accueil')}}>Accueil</a>
-  <a class="nav-link" >Menu</a>
+  <a class="nav-link" href={{ path('app_categories')}} >Menu</a>
   {% if (is_granted('ROLE_USER')) %}
          <a class="nav-link" href={{ path('app_logout')}}>Se Déconnecter</a>
         {% else %}
