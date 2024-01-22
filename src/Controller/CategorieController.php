@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Categorie;
+use App\Entity\SousCategorie;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +23,13 @@ class CategorieController extends AbstractController
 
         // Affiche les sousCategories demandée dans le template dédie
 
-        $sousCategories = $categorie->getSousCategorie();
+        $sousCategories = $categorie->getSousCategories();
 
         return $this->render('categorie/index.html.twig', [
             'controller_name' => 'CategorieController',
             'sousCategories' => $sousCategories,
             'categorie' => $categorie
-
-
+            
         ]);
     }
 }

@@ -12,6 +12,7 @@ use App\Entity\RecetteIngredient;
 use App\Entity\SousCategorie;
 use App\Entity\TableDeReponses;
 use App\Entity\Utilisateur;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -46,6 +47,13 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Miamsite');
+    }
+
+    //aficher sur la page d'admin modifier ou supprimer un élément
+    public function configureCrud(): Crud
+    {
+        return parent::configureCrud()
+        ->showEntityActionsInlined();
     }
 
     public function configureMenuItems(): iterable

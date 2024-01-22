@@ -4,9 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Ingredient;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class IngredientCrudController extends AbstractCrudController
 {
@@ -15,14 +16,14 @@ class IngredientCrudController extends AbstractCrudController
         return Ingredient::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            yield IdField::new('id')->hideOnForm(),
+            yield TextField::new('Nom'),
+            yield AssociationField::new('idImage')->setCrudController(IngredientCrudController::class)
         ];
     }
-    */
+    
 }

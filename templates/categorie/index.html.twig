@@ -8,6 +8,18 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-
+<div class="example-wrapper">
+  
+     <h5> {% for item in sousCategories %}
+     <div class="example-wrapper">
+   <div class="card border-0 shadow-sm">
+          <div class="text-center">
+            <a href={{ path("app_sous_categorie", { id: item.id } )}} >{{ item.nom }}</a>
+            
+          </div>
+     </div>
+     </div>
+  {% endfor %}</h5>  
+</div>
  
 {% endblock %}
