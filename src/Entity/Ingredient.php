@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Image;
 use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 #[Vich\Uploadable]
 class Ingredient
 {
+ 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,9 +22,33 @@ class Ingredient
     #[ORM\Column(length: 100)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'idIngredients')]
+    #[ORM\ManyToOne(inversedBy: 'idIngredients', targetEntity: Image::class, cascade:['persist'])]
+    #[Vich\UploadableField(mapping: "image", fileNameProperty: "nom")]
     private ?Image $idImage = null;
+  
+   
 
+    // ... Autres propriétés et méthodes
+
+  
+
+    public function setIdImage(?Image $idImage): self
+    {
+        $this->idImage = $idImage;
+
+        return $this;
+    }
+
+ 
+
+    public function getIdImage(): ?Image
+    {
+        return $this->idImage;
+    }
+
+   
+
+    
     #[ORM\OneToMany(mappedBy: 'nomIngredient', targetEntity: RecetteIngredient::class)]
     private Collection $recetteIngredients;
 
@@ -48,17 +74,7 @@ class Ingredient
         return $this;
     }
 
-    public function getIdImage(): ?Image
-    {
-        return $this->idImage;
-    }
-
-    public function setIdImage(?Image $idImage): static
-    {
-        $this->idImage = $idImage;
-
-        return $this;
-    }
+ 
 
     /**
      * @return Collection<int, RecetteIngredient>

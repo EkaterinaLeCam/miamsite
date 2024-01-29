@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Image;
+
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
@@ -25,6 +26,7 @@ class ImageCrudController extends AbstractCrudController
         return [
             yield IdField::new('id')->hideOnForm(),
             yield ImageField::new('nom')->setUploadDir('public/assets/images')
+            
             
         ];
     }

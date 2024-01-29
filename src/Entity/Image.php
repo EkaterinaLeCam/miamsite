@@ -18,8 +18,8 @@ class Image
     #[ORM\GeneratedValue]
     
     private ?int $id = null;
-    #[Vich\UploadableField(mapping:'image', fileNameProperty:'nom', size:'imageSize')]
-    private ?File $imageFile=null;
+    #[Vich\UploadableField(mapping:'ingredient', fileNameProperty:'nom', size:'imageSize')]
+    private ?File $file=null;
 
     #[ORM\Column(nullable: true)]
     private ?string $nom = null;
@@ -37,12 +37,12 @@ class Image
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      */
     
 
 
-    #[ORM\OneToMany(mappedBy: 'idImage', targetEntity: Ingredient::class, cascade:['persist'])]
+    #[ORM\OneToMany(mappedBy: 'idImage')]
     private Collection $idIngredients;
 
     #[ORM\OneToMany(mappedBy: 'photoRecette', targetEntity: Recette::class)]
@@ -58,20 +58,20 @@ class Image
     {
         return $this->id;
     }
-    public function setImageFile(?File $imageFile = null): void
+    public function setFile(?File $file=null): self
     {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
-        }
+        $this->file = $file;
+        // It is required that at least one field changes if you are using doctrine
+    // otherwise the event listeners won't be called and the file is lost
+       
+        $this->updatedAt = new \DateTimeImmutable();
+        
+        return $this;
     }
 
-    public function getImageFile(): ?File
+    public function getFile(): ?File
     {
-        return $this->imageFile;
+        return $this->file;
     }
 
     public function setNom(?string $nom): void
@@ -106,7 +106,7 @@ class Image
     {
         if (!$this->idIngredients->contains($idIngredient)) {
             $this->idIngredients->add($idIngredient);
-            $idIngredient->setIdImage($this);
+            $idIngredient->setIdImage(null);
         }
 
         return $this;
