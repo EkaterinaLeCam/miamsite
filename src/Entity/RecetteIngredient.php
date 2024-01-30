@@ -15,7 +15,7 @@ class RecetteIngredient
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recetteIngredients')]
+    #[ORM\ManyToOne(inversedBy: 'recetteIngredients', cascade: ['persist'])]
     private ?Ingredient $nomIngredient = null;
 
     #[ORM\Column]

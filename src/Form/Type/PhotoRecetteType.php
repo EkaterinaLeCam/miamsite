@@ -2,7 +2,8 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Ingredient;
+use App\Entity\Image;
+use App\Entity\Recette;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,12 +11,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 
-class IngredientType extends AbstractType
+class PhotoRecetteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('idImage', VichImageType::class, [
+        ->add('photoRecette', VichImageType::class, [
             'label' => 'Image',
             'required' => false,
         ]);
@@ -24,7 +25,7 @@ class IngredientType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Ingredient::class,
+            'data_class' => Recette::class,
         ]);
     }
 }

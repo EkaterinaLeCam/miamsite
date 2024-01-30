@@ -16,10 +16,10 @@ class Image
     #[ORM\Id]
     #[ORM\Column]
     #[ORM\GeneratedValue]
-    
+
     private ?int $id = null;
-    #[Vich\UploadableField(mapping:'ingredient', fileNameProperty:'nom', size:'imageSize')]
-    private ?File $file=null;
+    #[Vich\UploadableField(mapping: 'ingredient', fileNameProperty: 'nom', size: 'imageSize')]
+    private ?File $file = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $nom = null;
@@ -39,10 +39,10 @@ class Image
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      */
-    
 
 
-    #[ORM\OneToMany(mappedBy: 'idImage')]
+
+    #[ORM\OneToMany(mappedBy: 'idImage', targetEntity: Ingredient::class, orphanRemoval: true)]
     private Collection $idIngredients;
 
     #[ORM\OneToMany(mappedBy: 'photoRecette', targetEntity: Recette::class)]
@@ -58,15 +58,19 @@ class Image
     {
         return $this->id;
     }
-    public function setFile(?File $file=null): self
+    public function setFile(?File $file = null): self
     {
         $this->file = $file;
         // It is required that at least one field changes if you are using doctrine
-    // otherwise the event listeners won't be called and the file is lost
-       
+        // otherwise the event listeners won't be called and the file is lost
+
         $this->updatedAt = new \DateTimeImmutable();
-        
+
         return $this;
+    }
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 
     public function getFile(): ?File
@@ -106,7 +110,7 @@ class Image
     {
         if (!$this->idIngredients->contains($idIngredient)) {
             $this->idIngredients->add($idIngredient);
-            $idIngredient->setIdImage(null);
+            $idIngredient->setIdImage($this);
         }
 
         return $this;
@@ -157,4 +161,5 @@ class Image
     {
         return $this->getNom();
     }
+
 }

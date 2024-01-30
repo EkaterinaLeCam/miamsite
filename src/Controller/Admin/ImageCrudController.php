@@ -25,7 +25,7 @@ class ImageCrudController extends AbstractCrudController
     {
         return [
             yield IdField::new('id')->hideOnForm(),
-            yield ImageField::new('nom')->setUploadDir('public/assets/images')
+            yield ImageField::new('nom')->setUploadDir('/public/assets/images')
             
             
         ];
